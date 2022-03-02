@@ -2,7 +2,7 @@ const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 3000;
+const PORT =process.env.PORT || 3000;
 const fileUpload = require("express-fileupload");
 const methodOverride = require("method-override");
 const photoController = require("./controllers/photoController");
@@ -14,10 +14,14 @@ const myMiddleware = (req, res, next) => {
 };
 app.use(express.static("public"));
 app.use(fileUpload());
-mongoose.connect("mongodb://localhost/pcat-test-db", {
+mongoose.connect("mongodb+srv://betulkaraduman:1@cluster0.pdqju.mongodb.net/pcat-db?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   // useFindAndModify:false
+}).then(()=>{
+  console.log('DB Connection')
+}).catch(err=>{
+  console.log(err)
 });
 
 //bodydeki verileri almak için
